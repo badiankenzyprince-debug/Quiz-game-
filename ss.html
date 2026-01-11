@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Scramble Pro</title>
+
+<style>
+:root {
+  --main: #00ffd5;
+  --danger: #ff4d4d;
+  --bg: #0f2027;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+  background-size: 600% 600%;
+  animation: bgMove 10s ease infinite;
+  color: white;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.game-box {
+  width: 350px;
+  padding: 25px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0,255,213,0.3);
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 10px;
+  color: var(--main);
+  text-shadow: 0 0 10px var(--main);
+}
+
+.score {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.timer-bar {
+  height: 10px;
+  width: 100%;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.timer-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #00ffd5, #00aaff);
+  transition: width 1s linear;
+}
+
+.word {
+  font-size: 32px;
+  letter-spacing: 4px;
+  margin: 20px 0;
+  text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  text-align: center;
+}
+
+button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 15px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #00ffd5, #00aaff);
+  color: black;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--main);
+}
+
+.message {
+  margin-top: 15px;
+  font-size: 18px;
+  min-height: 24px;
+}
+
+.correct {
+  color: var(--main);
+  text-shadow: 0 0 10px var(--main);
+}
+
+.wrong {
+  color: var(--danger);
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game-box">
+  <h1>Word Scramble</h1>
+
+  <div class="score">
+    <span>Score: <b id="score">0</b></span>
+    <span>Time: <b id="time">30</b>s</span>
+  </div>
+
+  <div class="timer-bar">
+    <div class="timer-fill" id="timerFill"></div>
+  </div>
+
+  <div class="word" id="scrambledWord">----</div>
+
+  <input id="input" placeholder="Type the word..." />
+
+  <button onclick="startGame()" id="startBtn">Start Game</button>
+  <button onclick="checkWord()" id="submitBtn" style="display:none;">Submit</button>
+
+  <div class="message" id="message"></div>
+</div>
+
+<script>
+const words = [
+  "education","language","computer","knowledge","beautiful",
+  "confidence","challenge","vocabulary","experience","creative"
+];
+
+let currentWord = "";
+let score = 0;
+let time = 30;
+let timer;
+
+function scramble(word) {
+  return word.split('').sort(() => Math.random() - 0.5).join('');
+}
+
+function startGame() {
+  score = 0;
+  time = 30;
+  document.getElementById("score").textContent = score;
+  document.getElementById("time").textContent = time;
+  document.getElementById("timerFill").style.width = "100%";
+  document.getElementById("startBtn").style.display = "none";
+  document.getElementById("submitBtn").style.display = "block";
+  document.getElementById("message").textContent = "";
+  newWord();
+
+  timer = setInterval(() => {
+    time--;
+    document.getElementById("time").textContent = time;
+    document.getElementById("timerFill").style.width = (time / 30) * 100 + "%";
+
+    if (time <= 0) endGame();
+  }, 1000);
+}
+
+function newWord() {
+  currentWord = words[Math.floor(Math.random() * words.length)];
+  document.getElementById("scrambledWord").textContent = scramble(currentWord);
+  document.getElementById("input").value = "";
+  document.getElementById("input").focus();
+}
+
+function checkWord() {
+  const input = document.getElementById("input").value.toLowerCase();
+  const msg = document.getElementById("message");
+
+  if (input === currentWord) {
+    score++;
+    document.getElementById("score").textContent = score;
+    msg.textContent = "✔ Correct!";
+    msg.className = "message correct";
+    newWord();
+  } else {
+    msg.textContent = "✖ Wrong!";
+    msg.className = "message wrong";
+  }
+}
+
+function endGame() {
+  clearInterval(timer);
+  document.getElementById("message").textContent = "Game Over! Score: " + score;
+  document.getElementById("submitBtn").style.display = "none";
+  document.getElementById("startBtn").style.display = "block";
+}
+
+document.getElementById("input").addEventListener("keyup", e => {
+  if (e.key === "Enter") checkWord();
+});
+</script>
+
+</body>
+</html>

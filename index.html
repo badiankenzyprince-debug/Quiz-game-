@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ano palang name ng app</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+.box {
+    max-width: 360px;
+    margin: 90px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    animation: fadeIn 0.8s ease;
+}
+
+.box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.box input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.box button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: red;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.box button:hover {
+    background: #4338ca;
+}
+
+.switch {
+    text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
+    color: green;
+    font-weight: 600;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.menu-btn {
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 60px;
+    background: black;
+    border-radius: 12px;
+    width: 180px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.menu a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: #333;
+}
+
+.menu a:hover {
+    background: #f0f0f0;
+}
+
+.card {
+    background: green;
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    animation: fadeIn 0.6s ease;
+}
+
+.progress-bar {
+    height: 14px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress {
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #4ade80);
+    animation: load 1s ease;
+}
+
+@keyframes load {
+    from { width: 0; }
+    to { width: 60%; }
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.btn {
+    background: #4f46e5;
+    color: white;
+    padding: 16px;
+    border-radius: 14px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background: #4338ca;
+}
+
+
+@media (max-width: 480px) {
+    .buttons {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<div class="box" id="registerBox">
+    <h2>📝 Register</h2>
+    <input type="text" id="regUser" placeholder="Username">
+    <input type="password" id="regPass" placeholder="Password">
+    <button onclick="register()">Create Account</button>
+    <div class="switch" onclick="showLogin()">Already have an account? Login</div>
+</div>
+
+<!-- LOGIN -->
+<div class="box hidden" id="loginBox">
+    <h2>🔐 Login</h2>
+    <input type="text" id="loginUser" placeholder="Username">
+    <input type="password" id="loginPass" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <div class="switch" onclick="showRegister()">No account? Register</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+
+    <div class="header">
+        <h1>?ang app na malup3t palitan moto walang title app</h1>
+        <div class="menu-btn" onclick="toggleMenu()">⋮</div>
+    </div>
+
+    <div class="menu" id="menu">
+        <a href="#">👤 Profile</a>
+        <a href="#">⚙ Settings</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+
+    <div class="card">
+        <h2 id="welcome"></h2>
+        <p>Continue learning and improve your skills 🚀</p>
+    </div>
+
+   
+
+    <div class="card">
+        <h3>Quick Access</h3>
+        <div class="buttons">
+            <a href="lessons.html" class="btn"> Lessons</a>
+            <a href="quizzes.html" class="btn"> Quizzes</a>
+            <a href="aaaaa.html" class="btn"> Mini Games</a>
+            <a href="#" class="btn"> post test and pretest</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const registerBox = document.getElementById("registerBox");
+const loginBox = document.getElementById("loginBox");
+const dashboard = document.getElementById("dashboard");
+const welcome = document.getElementById("welcome");
+
+function showLogin() {
+    registerBox.classList.add("hidden");
+    loginBox.classList.remove("hidden");
+}
+
+function showRegister() {
+    loginBox.classList.add("hidden");
+    registerBox.classList.remove("hidden");
+}
+
+function register() {
+    const user = regUser.value;
+    const pass = regPass.value;
+
+    if (!user || !pass) return alert("Please fill uppan nyo ");
+
+    localStorage.setItem("user", user);
+    localStorage.setItem("pass", pass);
+
+    alert("Registration successful! Please login na.");
+    showLogin();
+}
+
+function login() {
+    const user = loginUser.value;
+    const pass = loginPass.value;
+
+    if (
+        user === localStorage.getItem("user") &&
+        pass === localStorage.getItem("pass")
+    ) {
+        localStorage.setItem("loggedIn", "true");
+        showDashboard();
+    } else {
+        alert("Invalid login details");
+    }
+}
+
+function showDashboard() {
+    registerBox.classList.add("hidden");
+    loginBox.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+    welcome.textContent = `Welcome, ${localStorage.getItem("user")} 👋`;
+}
+
+function logout() {
+    localStorage.removeItem("loggedIn");
+    location.reload();
+}
+
+function toggleMenu() {
+    const menu = document.getElementById("menu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+
+if (localStorage.getItem("loggedIn") === "true") {
+    showDashboard();
+}
+</script>
+
+</body>
+</html>
