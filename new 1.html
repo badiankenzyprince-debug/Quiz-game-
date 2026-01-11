@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Improve Your English Skills</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background: #2c7be5;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    section {
+        background: white;
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 800px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h2 {
+        color: #2c7be5;
+    }
+    .vocab {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+        padding: 10px;
+        background: #eef3fb;
+        border-radius: 5px;
+    }
+    button {
+        background: #2c7be5;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #1a5fc4;
+    }
+    .question {
+        margin: 15px 0;
+    }
+    .result {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Learn & Improve Your English</h1>
+    <p>Vocabulary • Grammar • Practice</p>
+</header>
+
+<section>
+    <h2>Lesson 1: Vocabulary</h2>
+    <div class="vocab">
+        <span><strong>Word:</strong> Improve</span>
+        <span><strong>Meaning:</strong> To make something better</span>
+    </div>
+    <div class="vocab">
+        <span><strong>Word:</strong> Confident</span>
+        <span><strong>Meaning:</strong> Feeling sure about yourself</span>
+    </div>
+    <div class="vocab">
+        <span><strong>Word:</strong> Practice</span>
+        <span><strong>Meaning:</strong> Repeating something to get better</span>
+    </div>
+</section>
+
+<section>
+    <h2>Lesson 2: Grammar Tip</h2>
+    <p><strong>Present Simple Tense</strong> is used for daily activities and facts.</p>
+    <p><em>Example:</em> “I study English every day.”</p>
+    <ul>
+        <li>I read books.</li>
+        <li>She watches movies.</li>
+        <li>They practice speaking.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Lesson 3: Reading Practice</h2>
+    <p>
+        Learning English takes time and practice. Reading, listening, and speaking every
+        day will help you improve faster. Do not be afraid to make mistakes.
+    </p>
+</section>
+
+<section>
+    <h2>Quiz: Test Your English</h2>
+
+    <div class="question">
+        <p>1. What does “confident” mean?</p>
+        <button onclick="checkAnswer(1, 'a')">A. Feeling sure about yourself</button>
+        <button onclick="checkAnswer(1, 'b')">B. Feeling tired</button>
+    </div>
+
+    <div class="question">
+        <p>2. Choose the correct sentence:</p>
+        <button onclick="checkAnswer(2, 'a')">A. She study English.</button>
+        <button onclick="checkAnswer(2, 'b')">B. She studies English.</button>
+    </div>
+
+    <p id="result" class="result"></p>
+</section>
+
+<script>
+    let score = 0;
+    let answered = {};
+
+    function checkAnswer(question, answer) {
+        if (answered[question]) return;
+
+        if (
+            (question === 1 && answer === 'a') ||
+            (question === 2 && answer === 'b')
+        ) {
+            score++;
+            alert("Correct!");
+        } else {
+            alert("Wrong answer. Try again next time!");
+        }
+
+        answered[question] = true;
+
+        if (Object.keys(answered).length === 2) {
+            document.getElementById("result").textContent =
+                "Your Score: " + score + " / 2";
+        }
+    }
+</script>
+
+</body>
+</html>
